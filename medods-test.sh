@@ -9,7 +9,7 @@ DATE=`date +"%d_%m_%Y"`
 
 
 
-# ïðîâåðÿåì åñòü ëè ïàðàìåòð
+# Ð¿Ñ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ ÐµÑÑ‚ÑŒ Ð»Ð¸ Ð¿Ð°Ñ€Ð°Ð¼ÐµÑ‚Ñ€
 if [ -z $1 ]
  then fname="${name}_${DATE}"
  else fname="${1}_${DATE}"
@@ -39,13 +39,13 @@ if [ -e list.out ]
    echo -e "${RED}Error download, exit....${ENDCOLOR}"
    exit
 fi
-# Ôîðìèðóåì ôàéë ${fname}_failed.out
+# Ð¤Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÐ¼ Ñ„Ð°Ð¹Ð» ${fname}_failed.out
 echo "Create file ${fname}_failed.out"
 for L in $(cat list.out | grep -P 'Error|CrashLoopBackOff' | awk '{print $1}'); do
       echo "${L%-*-*}" >> "$fname"_failed.out
       let i=i+1;
 done
-echo "Êîëè÷åñòâî ñåðâèñîâ ñ îøèáêàìè: ${i}" >> "$fname"_failed.out
+echo "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐµÑ€Ð²Ð¸ÑÐ¾Ð² Ñ Ð¾ÑˆÐ¸Ð±ÐºÐ°Ð¼Ð¸: ${i}" >> "$fname"_failed.out
 if [ -e "$fname"_failed.out ]
  then
    echo -e "${GREEN}Created...${ENDCOLOR}"
@@ -54,13 +54,13 @@ if [ -e "$fname"_failed.out ]
    exit
 fi
 
-# Ôîðìèðóåì ôàéë ${fname}_running.out
+# Ð¤Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÐ¼ Ñ„Ð°Ð¹Ð» ${fname}_running.out
 echo "Create file ${fname}_running.out"
 for L in $(cat list.out | grep -P 'Running' | awk '{print $1}'); do
       echo "${L%-*-*}" >> "$fname"_running.out
       let j=j+1;
 done
-echo "Êîëè÷åñòâî ðàáîòàþùèõ ñåðâèñîâ: ${j}" >> "$fname"_running.out
+echo "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ€Ð°Ð±Ð¾Ñ‚Ð°ÑŽÑ‰Ð¸Ñ… ÑÐµÑ€Ð²Ð¸ÑÐ¾Ð²: ${j}" >> "$fname"_running.out
 if [ -e "$fname"_running.out ]
  then
    echo -e "${GREEN}Created...${ENDCOLOR}"
@@ -69,11 +69,11 @@ if [ -e "$fname"_running.out ]
    exit
 fi
 
-# Ôîðìèðóåì ôàéë ${fname}_report.out
+# Ð¤Ð¾Ñ€Ð¼Ð¸Ñ€ÑƒÐµÐ¼ Ñ„Ð°Ð¹Ð» ${fname}_report.out
 echo "Create file ${fname}_report.out"
-printf "Êîëè÷åñòâî ïåðåçàïóñòèâøèõñÿ ñåðâèñîâ: `cat list.out | awk '{print $4}' | grep [1-9] | wc -l`\n" >> "$fname"_report.out
-echo "Èìÿ ñèñòåìíîãî ïîëüçîâàòåëÿ: $USER">> "$fname"_report.out
-echo "Äàòà: $DATE">> "$fname"_report.out
+printf "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¿ÐµÑ€ÐµÐ·Ð°Ð¿ÑƒÑÑ‚Ð¸Ð²ÑˆÐ¸Ñ…ÑÑ ÑÐµÑ€Ð²Ð¸ÑÐ¾Ð²: `cat list.out | awk '{print $4}' | grep [1-9] | wc -l`\n" >> "$fname"_report.out
+echo "Ð˜Ð¼Ñ ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ð¾Ð³Ð¾ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ: $USER">> "$fname"_report.out
+echo "Ð”Ð°Ñ‚Ð°: $DATE">> "$fname"_report.out
 if [ -e "$fname"_report.out ]
  then
    echo -e "${GREEN}Created...${ENDCOLOR}"
@@ -84,7 +84,7 @@ fi
 
 rm list.out
 
-# ñîçäàåì àðõèâ
+# ÑÐ¾Ð·Ð´Ð°ÐµÐ¼ Ð°Ñ€Ñ…Ð¸Ð²
 echo "Create and test arhive"
 tar -jcvf $fname.tar.bz2 *
    bunzip2 -c $fname.tar.bz2 | tar t > /dev/null && echo -e "${GREEN}Arhive is GOOD${ENDCOLOR}"
@@ -94,10 +94,6 @@ echo "Copy arhive file in arhive folder"
 mv ${fname}.tar.bz2 ../archives/
 cd ..
 rm -rf temp
-
-#cp $fname.tar .
-#cd ..
-#rm -rf temp
 
 
 
